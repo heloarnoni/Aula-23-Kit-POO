@@ -5,10 +5,6 @@ import br.com.starlog.controller.TransmissaoController;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * CAMADA VIEW: só coleta texto, delega ao Controller e exibe o resultado.
- * Nenhuma regra de negócio aqui. O botão é um "garçom".
- */
 public class TelaTransmissao extends JFrame {
 
     private final TransmissaoController controller = new TransmissaoController();
