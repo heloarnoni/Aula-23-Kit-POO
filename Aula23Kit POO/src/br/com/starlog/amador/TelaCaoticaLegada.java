@@ -7,17 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * CÓDIGO LEGADO CORROMPIDO • ESTAÇÃO STARLOG-ZERO
- * 
- * ALERTA DE ARQUITETURA: Este arquivo é um exemplo CLÁSSICO de código macarrônico amador!
- * Ele viola o Princípio da Responsabilidade Única (SRP) e o padrão MVC.
- * Tudo está misturado: criação visual, validações, cálculo de criptografia e persistência em memória.
- * 
- * MISSÃO DO SQUAD:
- * Resgatar as regras deste arquivo e refatorar criando o Model (CriptoMensagem) 
- * e o Controller (TransmissaoController), fazendo a suíte de testes TDD acender a barra VERDE!
- */
 public class TelaCaoticaLegada extends JFrame {
 
     private JTextField txtRemetente;
@@ -26,7 +15,6 @@ public class TelaCaoticaLegada extends JFrame {
     private JButton btnDespacharCifrado;
     private JTextArea areaLog;
 
-    // "Banco de dados" misturado diretamente dentro da janela!
     private List<String> historicoDisparos = new ArrayList<>();
 
     public TelaCaoticaLegada() {
@@ -53,18 +41,14 @@ public class TelaCaoticaLegada extends JFrame {
         areaLog = new JTextArea(10, 35);
         add(new JScrollPane(areaLog));
 
-        // =========================================================================
-        // O MONSTRO DO BOTAO: Mais de 60 linhas misturando tudo dentro do evento!
-        // =========================================================================
         btnDespacharCifrado.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 1. Coleta direta da tela
+
                 String remetente = txtRemetente.getText();
                 String msg = txtMensagem.getText();
                 String chaveStr = txtChaveCifra.getText();
 
-                // 2. Validações primitivas misturadas com JOptionPane
                 if (remetente == null || remetente.trim().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "ERRO: Remetente não pode ser vazio!");
                     return;
@@ -74,7 +58,6 @@ public class TelaCaoticaLegada extends JFrame {
                     return;
                 }
 
-                // 3. Conversão de tipo no meio da tela com risco de quebra
                 int deslocamento = 0;
                 try {
                     deslocamento = Integer.parseInt(chaveStr.trim());
@@ -87,7 +70,6 @@ public class TelaCaoticaLegada extends JFrame {
                     return;
                 }
 
-                // 4. REGRA DE NEGÓCIO PESADA: Criptografia Cifra de César rodando dentro do botão!
                 StringBuilder cifrado = new StringBuilder();
                 String textoLimpo = msg.trim().toUpperCase();
                 for (int i = 0; i < textoLimpo.length(); i++) {
@@ -96,18 +78,16 @@ public class TelaCaoticaLegada extends JFrame {
                         char letraCifrada = (char) ('A' + (c - 'A' + deslocamento) % 26);
                         cifrado.append(letraCifrada);
                     } else {
-                        cifrado.append(c); // Mantém espaços e pontuações
+                        cifrado.append(c);
                     }
                 }
 
-                // 5. REGRA DE ASSINATURA: Hash de verificação simples concatenado
                 int checksum = 0;
                 for (char c : textoLimpo.toCharArray()) {
                     checksum += (int) c;
                 }
                 String pacoteFinal = String.format("[%s] #%d -> %s", remetente.trim().toUpperCase(), checksum, cifrado.toString());
 
-                // 6. Persistência direta em memória acoplada na tela
                 historicoDisparos.add(pacoteFinal);
                 areaLog.append(pacoteFinal + "\n");
                 JOptionPane.showMessageDialog(null, "Transmissão efetuada com sucesso!");
