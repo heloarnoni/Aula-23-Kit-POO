@@ -1,17 +1,12 @@
 package br.com.starlog.model;
 
-/**
- * CAMADA MODEL (Modelo de Domínio)
- * Representa uma mensagem criptográfica a ser transmitida.
- * Zero imports de javax.swing: roda e testa sem abrir janela.
- */
 public class CriptoMensagem {
     private final String remetente;
     private final String mensagem;
     private final int chaveDeslocamento;
 
     public CriptoMensagem(String remetente, String mensagem, int chaveDeslocamento) {
-        // Barreira Fail-Fast
+
         if (remetente == null || remetente.trim().isEmpty()) {
             throw new IllegalArgumentException("Remetente não pode ser nulo ou vazio.");
         }
@@ -22,7 +17,6 @@ public class CriptoMensagem {
             throw new IllegalArgumentException("Chave deve estar entre 1 e 25.");
         }
 
-        // Normalização
         this.remetente = remetente.trim().toUpperCase();
         this.mensagem = mensagem.trim().toUpperCase();
         this.chaveDeslocamento = chaveDeslocamento;
@@ -40,10 +34,6 @@ public class CriptoMensagem {
         return chaveDeslocamento;
     }
 
-    /**
-     * Cifra de César com deslocamento circular ('A'..'Z').
-     * Preserva espaços, números e pontuações sem alteração.
-     */
     public String cifrar() {
         StringBuilder cifrado = new StringBuilder();
         for (int i = 0; i < mensagem.length(); i++) {
@@ -57,9 +47,6 @@ public class CriptoMensagem {
         return cifrado.toString();
     }
 
-    /**
-     * Checksum: soma do código ASCII de cada caractere da mensagem em maiúsculo.
-     */
     public int calcularChecksum() {
         int checksum = 0;
         for (char c : mensagem.toCharArray()) {
